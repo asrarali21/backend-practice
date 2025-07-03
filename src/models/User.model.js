@@ -25,7 +25,8 @@ userschema.pre("save" , async function (next) {
     next()
    }
 })
-//here is the login logic if the password entered the user matches the hashed password which is stored in the database its comparing where this.password is store in database
+//here is the login logic
+//in this we have created method which is to compare or check the password which is stored in db is matching with the password entered by the user when login 
 userschema.methods.IspasswordCorrect = async function (password) {
     return await bcrypt.compare(password , this.password)
 }
