@@ -31,7 +31,6 @@ userschema.pre("save" , async function (next) {
 userschema.methods.IspasswordCorrect = async function (password) {
     return await bcrypt.compare(password , this.password)
 }
-//function () means this method can use this to refer to the specific user document.
 userschema.methods.GenerateAccessToken = function () {
     //jwt.sign(payload, secret, options) creates a JWT.
     return jwt.sign ({ 
