@@ -15,7 +15,6 @@ const userschema = new Schema({
          required:[true , "password is required"]
      },
 }, {timestamps:true})
-// just for streak
 // what this does is it is a middleware of mongoose "pre" which tells before saving execute the async function
 //isModified is  moongoose inbuild method
 userschema.pre("save" , async function (next) {
