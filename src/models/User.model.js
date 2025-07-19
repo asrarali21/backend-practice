@@ -14,6 +14,13 @@ const userschema = new Schema({
         type : String,
          required:[true , "password is required"]
      },
+     profilePic :{
+        type : String,
+     },
+    refreshToken :{
+           type : String
+        }
+        
 }, {timestamps:true})
 // what this does is it is a middleware of mongoose "pre" which tells before saving execute the async function
 //isModified is  moongoose inbuild method
