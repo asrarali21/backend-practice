@@ -6,8 +6,8 @@ const app = express()
 app.use(cors())
 app.use(express.json({limit:"16kb"}))
 
-import { router } from "./routes/user.route"
+import { router } from "./routes/user.route.js"
 
-app.use("/api/v1/user" , router)
+app.use("/api/v1/user", router)
 
 export default app
