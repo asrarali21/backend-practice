@@ -55,4 +55,36 @@ if (!profile || !profile.url) {
      )
 })
 
+const loginUser = asyncHandler (async(req , res)=>{
+   // extract data from req.body
+   //validate
+   //check if user exist 
+   //check password 
+      const {email , password} = req.body
+      
+      if (!email || !password) {
+         throw new ApiError (401, "email and password is required" )
+      }
+
+      
+      const user = await User.findOne({email})
+
+
+      if (!user) {
+         throw new ApiError(402 , "user not found")
+      }
+         //method from user model
+      const isPasswordValid = await user.IspasswordCorrect(password)
+            
+      if (!isPasswordValid) {
+         throw new ApiError(401 , "invalid creadential")
+      }
+      
+      
+
+
+
+})
+
+
 export {registerUser}
