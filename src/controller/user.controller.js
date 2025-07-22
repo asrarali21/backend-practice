@@ -4,6 +4,20 @@ import { User } from "../models/User.model.js"
 import { uploadoncloudinary } from "../utils/cloudinary.js"
 import { ApiResponse } from "../utils/apiResponse.js"
 
+  const GenerateAccessAndRefreshToken = async(userId)=>{
+   try {
+      const user = await User.findById(userId)
+      const accessToken = user.GenerateAccessToken()
+      const refreshToken = user.GenerateRefreshToken()
+      user.refreshToken = refreshToken
+      await user.save({validateBeforeSave:false})
+      return {accessToken , refreshToken}
+   } catch (error) {
+      throw new ApiError(500 , "something went wrong")
+   }
+  }
+
+
 //custom async handler function to avoid try and catch 
 const registerUser  =  asyncHandler ( async (req , res)=>{ 
     //first we have to take the details from user 
@@ -79,9 +93,29 @@ const loginUser = asyncHandler (async(req , res)=>{
       if (!isPasswordValid) {
          throw new ApiError(401 , "invalid creadential")
       }
-      
+
+
+      const {accessToken , refreshToken} = await GenerateAccessAndRefreshToken(user._id)
+       
+      const loggedInUser = await User.findById(user.id).select("-password -refreshToken")
       
 
+      const options = {
+       httpOnly : true,
+      secure : true 
+      }
+      return res.status(200)
+      .cookie("accesstoken" ,accessToken , options )
+     .cookie("refreshtoken" ,refreshToken , options )
+     .json(
+      ApiResponse(200 , 
+         {
+            user : loggedInUser , accessToken , refreshToken
+         },
+         "user logged in successfully"
+      )
+     )
+    
 
 
 })
