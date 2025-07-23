@@ -96,10 +96,10 @@ const loginUser = asyncHandler (async(req , res)=>{
 
 
       const {accessToken , refreshToken} = await GenerateAccessAndRefreshToken(user._id)
-       
+       //removing password and refresh token before response
       const loggedInUser = await User.findById(user.id).select("-password -refreshToken")
       
-
+    //before you send cookies options should be there
       const options = {
        httpOnly : true,
       secure : true 
