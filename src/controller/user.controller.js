@@ -117,6 +117,10 @@ const loginUser = asyncHandler (async(req , res)=>{
      )
     
 
+     const logoutuser  = asyncHandler(async(req , res)=>{
+         
+     })
+
 
 })
 
