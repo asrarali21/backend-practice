@@ -115,8 +115,7 @@ const loginUser = asyncHandler (async(req , res)=>{
          "user logged in successfully"
       )
      )
-    // exams streak
-
+   
      const logoutuser  = asyncHandler(async(req , res)=>{
           await User.findByIdAndUpdate(
             req.user._id,
